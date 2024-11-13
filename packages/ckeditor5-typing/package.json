@@ -13,9 +13,9 @@
   "type": "module",
   "main": "src/index.ts",
   "dependencies": {
-    "@ckeditor/ckeditor5-core": "43.3.0",
-    "@ckeditor/ckeditor5-engine": "43.3.0",
-    "@ckeditor/ckeditor5-utils": "43.3.0",
+    "@ckeditor/ckeditor5-core": "43.3.1",
+    "@ckeditor/ckeditor5-engine": "43.3.1",
+    "@ckeditor/ckeditor5-utils": "43.3.1",
     "es-toolkit": "1.27.0"
   },
   "devDependencies": {
