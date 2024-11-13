@@ -18,11 +18,11 @@ order: 30
 
 Angular is a TypeScript-based, open-source, single-page web application framework. The CKEditor 5 component for Angular supports integrating different editor types.
 
-This guide assumes you already have an Angular project. To create such a project, you can use Angular CLI. Refer to the [Angular documentation](https://angular.io/cli) to learn more.
-
 {@snippet getting-started/use-builder}
 
 ## Quick start
+
+This guide assumes you already have an Angular project. To create such a project, you can use Angular CLI. Refer to the [Angular documentation](https://angular.io/cli) to learn more.
 
 <info-box>
 	To use our CDN services, [create a free account](https://portal.ckeditor.com/checkout?plan=free).
@@ -629,12 +629,17 @@ Because of the breaking changes in the Angular library output format, the `@cked
 	 <td colspan="3">Actively supported versions</td>
 	</tr>
 	<tr>
-	 <td><code>^8</code></td>
-	 <td><code>13+</code></td>
-	 <td>Requires CKEditor&nbsp;5 in version <a href="https://github.com/ckeditor/ckeditor5/releases/tag/v42.0.0">42</a> or higher.</td>
+	 <td><code>^9</code></td>
+	 <td><code>16+</code></td>
+	 <td>Migration to TypeScript&nbsp;5. Declaration files are not backward compatible. Requires CKEditor&nbsp;5 in version <a href="https://github.com/ckeditor/ckeditor5/releases/tag/v43.0.0">43</a> or higher.</td>
 	</tr>
 	<tr>
 	 <td colspan="3">Past releases (no longer maintained)</td>
+	</tr>
+	<tr>
+	 <td><code>^8</code></td>
+	 <td><code>13+</code></td>
+	 <td>Requires CKEditor&nbsp;5 in version <a href="https://github.com/ckeditor/ckeditor5/releases/tag/v42.0.0">42</a> or higher.</td>
 	</tr>
 	<tr>
 	 <td><code>^7</code></td>
