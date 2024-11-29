@@ -37,21 +37,20 @@ describe( 'BoldUI', () => {
 		return editor.destroy();
 	} );
 
+	it( 'should have `isOfficialPlugin` static flag set to `true`', () => {
+		expect( BoldUI.isOfficialPlugin ).to.be.true;
+	} );
+
+	it( 'should have `isPremiumPlugin` static flag set to `false`', () => {
+		expect( BoldUI.isPremiumPlugin ).to.be.false;
+	} );
+
 	describe( 'toolbar button', () => {
 		beforeEach( () => {
 			boldView = editor.ui.componentFactory.create( 'bold' );
 		} );
 
 		testButton();
-
-		it( 'should bind `isOn` to bold command', () => {
-			const command = editor.commands.get( 'bold' );
-
-			expect( boldView.isOn ).to.be.false;
-
-			command.value = true;
-			expect( boldView.isOn ).to.be.true;
-		} );
 	} );
 
 	describe( 'menu bar button', () => {
@@ -60,6 +59,20 @@ describe( 'BoldUI', () => {
 		} );
 
 		testButton();
+
+		it( 'should create button with `menuitemcheckbox` role', () => {
+			expect( boldView.role ).to.equal( 'menuitemcheckbox' );
+		} );
+
+		it( 'should bind `isOn` to `aria-checked` attribute', () => {
+			boldView.render();
+
+			boldView.isOn = true;
+			expect( boldView.element.getAttribute( 'aria-checked' ) ).to.be.equal( 'true' );
+
+			boldView.isOn = false;
+			expect( boldView.element.getAttribute( 'aria-checked' ) ).to.be.equal( 'false' );
+		} );
 	} );
 
 	function testButton() {
@@ -92,6 +105,18 @@ describe( 'BoldUI', () => {
 
 		it( 'should set keystroke in the model', () => {
 			expect( boldView.keystroke ).to.equal( 'CTRL+B' );
+		} );
+
+		it( 'should bind `isOn` to `command`.`value`', () => {
+			const command = editor.commands.get( 'bold' );
+
+			command.value = true;
+
+			expect( boldView.isOn ).to.be.true;
+
+			command.value = false;
+
+			expect( boldView.isOn ).to.be.false;
 		} );
 	}
 } );

@@ -55,6 +55,14 @@ describe( 'SourceEditing', () => {
 		expect( SourceEditing.pluginName ).to.equal( 'SourceEditing' );
 	} );
 
+	it( 'should have `isOfficialPlugin` static flag set to `true`', () => {
+		expect( SourceEditing.isOfficialPlugin ).to.be.true;
+	} );
+
+	it( 'should have `isPremiumPlugin` static flag set to `false`', () => {
+		expect( SourceEditing.isPremiumPlugin ).to.be.false;
+	} );
+
 	describe( 'initialization', () => {
 		describe( 'in toolbar', () => {
 			testButton( 'Source', ButtonView );
@@ -215,6 +223,7 @@ describe( 'SourceEditing', () => {
 				expect( button ).to.be.instanceOf( Component );
 				expect( button.isEnabled ).to.be.true;
 				expect( button.isOn ).to.be.false;
+				expect( button.isToggleable ).to.be.true;
 				expect( button.label ).to.equal( label );
 			} );
 
@@ -827,7 +836,7 @@ describe( 'SourceEditing', () => {
 
 		editorElement.remove();
 
-		editor.destroy();
+		await editor.destroy();
 	} );
 } );
 

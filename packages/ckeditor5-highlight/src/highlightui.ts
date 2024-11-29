@@ -84,6 +84,13 @@ export default class HighlightUI extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
+	public static override get isOfficialPlugin(): true {
+		return true;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public init(): void {
 		const options = this.editor.config.get( 'highlight.options' )!;
 
@@ -266,9 +273,9 @@ export default class HighlightUI extends Plugin {
 	private _addMenuBarButton( options: Array<HighlightOption> ) {
 		const editor = this.editor;
 		const t = editor.t;
+		const command: HighlightCommand = editor.commands.get( 'highlight' )!;
 
 		editor.ui.componentFactory.add( 'menuBar:highlight', locale => {
-			const command: HighlightCommand = editor.commands.get( 'highlight' )!;
 			const menuView = new MenuBarMenuView( locale );
 
 			menuView.buttonView.set( {
@@ -286,13 +293,15 @@ export default class HighlightUI extends Plugin {
 
 				buttonView.set( {
 					label: option.title,
-					icon: getIconForType( option.type )
+					icon: getIconForType( option.type ),
+					role: 'menuitemradio',
+					isToggleable: true
 				} );
+
+				buttonView.iconView.fillColor = option.color;
 
 				buttonView.delegate( 'execute' ).to( menuView );
 				buttonView.bind( 'isOn' ).to( command, 'value', value => value === option.model );
-				buttonView.bind( 'ariaChecked' ).to( buttonView, 'isOn' );
-				buttonView.iconView.bind( 'fillColor' ).to( buttonView, 'isOn', value => value ? 'transparent' : option.color );
 
 				buttonView.on( 'execute', () => {
 					editor.execute( 'highlight', { value: option.model } );

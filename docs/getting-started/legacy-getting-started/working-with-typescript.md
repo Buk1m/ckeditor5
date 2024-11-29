@@ -5,12 +5,12 @@
 
 category: legacy
 order: 85
-menu-title: TypeScript legacy support
-meta-title: TypeScript legacy support | Legacy CKEditor 5 documentation
+menu-title: (Legacy) TypeScript support
+meta-title: TypeScript support | Legacy CKEditor 5 documentation
 modified_at: 2023-04-03
 ---
 
-# TypeScript support in CKEditor&nbsp;5 &ndash; Legacy guide
+# (Legacy) TypeScript support in CKEditor&nbsp;5
 
 <info-box warning>
 	⚠️  We changed installation methods and this legacy guide is kept for users' convenience. If you are looking for current CKEditor 5 installation instructions, please refer to the newest version of the {@link getting-started/setup/typescript-support TypeScript support in CKEditor 5} guide.
@@ -70,7 +70,7 @@ If you want to integrate CKEditor&nbsp;5 directly in your TypeScript project, fo
 The latest versions of our official components for Angular, React, and Vue 3 were migrated to TypeScript and use native CKEditor&nbsp;5's type definitions. You do not need to provide custom definitions anymore. You can use the following guides:
 
 * {@link getting-started/integrations/angular Angular component}
-* {@link getting-started/integrations/react React component}
+* {@link getting-started/integrations/react-default-npm React component}
 * {@link getting-started/integrations/vuejs-v3 Vue.js 3+ component}
 
 ## Developing plugins using TypeScript

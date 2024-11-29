@@ -1,5 +1,5 @@
 ---
-menu-title: Angular
+menu-title: (Legacy) Angular
 meta-title: Angular rich text editor component | Legacy CKEditor 5 documentation
 category: legacy-integrations
 order: 20
@@ -7,7 +7,7 @@ order: 20
 
 {@snippet installation/integrations/framework-integration}
 
-# Angular rich text editor component &ndash; Legacy guide
+# (Legacy) Angular rich text editor component
 
 <info-box warning>
 	⚠️  We changed installation methods and this legacy guide is kept for users' convenience. If you are looking for current CKEditor 5 Angular integration, please refer to the newest version of the {@link getting-started/integrations/angular CKEditor&nbsp;5 integration} guide.
@@ -295,17 +295,6 @@ export class AppComponent {
 ### Using the editor with collaboration plugins
 
 The easiest way to integrate {@link features/collaboration collaboration plugins} in an Angular application is to create a custom build first and then import it from the Angular application. See [Using a custom CKEditor&nbsp;5 build](#using-a-custom-ckeditor-5-build).
-
-<info-box>
-	For such a scenario we provide a few **ready-to-use integrations** featuring collaborative editing in Angular applications:
-
-	* [CKEditor&nbsp;5 with real-time collaboration features](https://github.com/ckeditor/ckeditor5-collaboration-samples/tree/master/real-time-collaboration-for-angular)
-	* [CKEditor&nbsp;5 with real-time collaboration and revision history features](https://github.com/ckeditor/ckeditor5-collaboration-samples/tree/master/real-time-collaboration-revision-history-for-angular)
-	* [CKEditor&nbsp;5 with the revision history feature](https://github.com/ckeditor/ckeditor5-collaboration-samples/tree/master/revision-history-for-angular)
-	* [CKEditor&nbsp;5 with the track changes feature](https://github.com/ckeditor/ckeditor5-collaboration-samples/tree/master/track-changes-for-angular)
-
-	It is not mandatory to build applications on top of the above samples, however, they should help you get started.
-</info-box>
 
 ## Integration with `ngModel`
 

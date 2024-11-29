@@ -50,6 +50,14 @@ describe( 'CodeBlockUI', () => {
 		return editor.destroy();
 	} );
 
+	it( 'should have `isOfficialPlugin` static flag set to `true`', () => {
+		expect( CodeBlockUI.isOfficialPlugin ).to.be.true;
+	} );
+
+	it( 'should have `isPremiumPlugin` static flag set to `false`', () => {
+		expect( CodeBlockUI.isPremiumPlugin ).to.be.false;
+	} );
+
 	describe( 'toolbar', () => {
 		let button;
 
@@ -125,6 +133,20 @@ describe( 'CodeBlockUI', () => {
 		beforeEach( () => {
 			subMenu = editor.ui.componentFactory.create( 'menuBar:codeBlock' );
 			languagesListView = subMenu.panelView.children.first;
+		} );
+
+		it( 'has proper menu item role on button', () => {
+			expect( subMenu.buttonView.role ).to.be.equal( 'menuitem' );
+		} );
+
+		it( 'sets item\'s aria-checked attribute depending on the value of the CodeBlockCommand', () => {
+			const { element } = languagesListView.items.get( 2 ).children.first;
+
+			expect( element.getAttribute( 'aria-checked' ) ).to.be.equal( 'false' );
+
+			command.value = 'cs';
+
+			expect( element.getAttribute( 'aria-checked' ) ).to.be.equal( 'true' );
 		} );
 
 		it( 'has isEnabled bound to command\'s isEnabled', () => {

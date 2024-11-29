@@ -169,6 +169,34 @@ ClassicEditor
 </script>
 ```
 
+In some environments, you may not be able to use the import maps or JavaScript modules. In such cases, you can use the UMD builds instead. These register global variables that you can use in your scripts. This is the same setup as above, but using the UMD builds:
+
+```html
+<!-- Style sheets -->
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/{@var ckeditor5-version}/ckeditor5.css" />
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5-premium-features/{@var ckeditor5-version}/ckeditor5-premium-features.css" />
+
+<!-- Scripts -->
+<script src="https://cdn.ckeditor.com/ckeditor5/{@var ckeditor5-version}/ckeditor5.umd.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5-premium-features/{@var ckeditor5-version}/ckeditor5-premium-features.umd.js"></script>
+
+<!-- Translations -->
+<script src="https://cdn.ckeditor.com/ckeditor5/{@var ckeditor5-version}/translations/pl.umd.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5-premium-features/{@var ckeditor5-version}/translations/pl.umd.js"></script>
+
+<script>
+const { ClassicEditor, Essentials, Bold, Italic, Paragraph, Mention } = CKEDITOR;
+const { FormatPainter, SlashCommand } = CKEDITOR_PREMIUM_FEATURES;
+
+ClassicEditor
+	.create( document.querySelector( '#editor' ), {
+		plugins: [ Essentials, Bold, Italic, Paragraph, Mention, FormatPainter, SlashCommand ],
+		toolbar: [ /* ... */ ],
+		licenseKey: '<LICENSE_KEY>'
+	} );
+</script>
+```
+
 ### What's new?
 
 There are a few things that stand out in both examples compared to the old installation methods:
@@ -324,6 +352,7 @@ First, if you maintain any CKEditor&nbsp;5 custom plugins as separate packages, 
 Second, proceed with migrating your project, depending on the old installation method you are using.
 
 * {@link updating/nim-migration/predefined-builds Migrating from predefined builds}.
+* {@link updating/nim-migration/online-builder Migrating from legacy Online Builder}.
 * {@link updating/nim-migration/customized-builds Migrating from customized builds}.
 * {@link updating/nim-migration/dll-builds Migrating from DLL builds}.
 

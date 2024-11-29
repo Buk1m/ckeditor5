@@ -49,6 +49,13 @@ export default class FindAndReplaceUI extends Plugin {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	public static override get isOfficialPlugin(): true {
+		return true;
+	}
+
+	/**
 	 * A reference to the find and replace form view.
 	 */
 	public formView: FindAndReplaceFormView & ViewWithCssTransitionDisabler | null;
@@ -214,6 +221,15 @@ export default class FindAndReplaceUI extends Plugin {
 	private _createDialogButtonForMenuBar(): MenuBarMenuListItemButtonView {
 		const buttonView = this._createButton( MenuBarMenuListItemButtonView );
 		const dialogPlugin = this.editor.plugins.get( 'Dialog' );
+		const dialog = this.editor.plugins.get( 'Dialog' );
+
+		buttonView.set( {
+			role: 'menuitemcheckbox',
+			isToggleable: true
+		} );
+
+		// Button should be on when the find and replace dialog is opened.
+		buttonView.bind( 'isOn' ).to( dialog, 'id', id => id === 'findAndReplace' );
 
 		buttonView.on( 'execute', () => {
 			if ( dialogPlugin.id === 'findAndReplace' ) {

@@ -29,6 +29,13 @@ export default class SuperscriptUI extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
+	public static override get isOfficialPlugin(): true {
+		return true;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public init(): void {
 		const editor = this.editor;
 		const t = editor.locale.t;
@@ -41,22 +48,7 @@ export default class SuperscriptUI extends Plugin {
 		} );
 
 		// Add superscript button to feature components.
-		editor.ui.componentFactory.add( SUPERSCRIPT, () => {
-			const buttonView = createButton( ButtonView );
-			const command = editor.commands.get( SUPERSCRIPT )!;
-
-			buttonView.set( {
-				tooltip: true
-			} );
-
-			// Bind button model to command.
-			buttonView.bind( 'isOn' ).to( command, 'value' );
-
-			return buttonView;
-		} );
-
-		editor.ui.componentFactory.add( 'menuBar:' + SUPERSCRIPT, () => {
-			return createButton( MenuBarMenuListItemButtonView );
-		} );
+		editor.ui.componentFactory.add( SUPERSCRIPT, () => createButton( ButtonView ) );
+		editor.ui.componentFactory.add( 'menuBar:' + SUPERSCRIPT, () => createButton( MenuBarMenuListItemButtonView ) );
 	}
 }

@@ -63,6 +63,14 @@ describe( 'FontSizeUI', () => {
 		return editor.destroy();
 	} );
 
+	it( 'should have `isOfficialPlugin` static flag set to `true`', () => {
+		expect( FontSizeUI.isOfficialPlugin ).to.be.true;
+	} );
+
+	it( 'should have `isPremiumPlugin` static flag set to `false`', () => {
+		expect( FontSizeUI.isPremiumPlugin ).to.be.false;
+	} );
+
 	describe( 'toolbar dropdown', () => {
 		let dropdown;
 
@@ -356,6 +364,14 @@ describe( 'FontSizeUI', () => {
 
 				command.value = 'small';
 				expect( buttonSmall.isOn ).to.be.true;
+			} );
+
+			it( 'button has proper `aria-checked` attribute set when active', () => {
+				expect( buttonSmall.element.getAttribute( 'aria-checked' ) ).to.be.equal( 'false' );
+
+				command.value = 'small';
+
+				expect( buttonSmall.element.getAttribute( 'aria-checked' ) ).to.be.equal( 'true' );
 			} );
 		} );
 	} );

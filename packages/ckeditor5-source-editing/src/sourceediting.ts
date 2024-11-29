@@ -38,6 +38,13 @@ export default class SourceEditing extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
+	public static override get isOfficialPlugin(): true {
+		return true;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public static get requires() {
 		return [ PendingActions ] as const;
 	}
@@ -104,7 +111,8 @@ export default class SourceEditing extends Plugin {
 			const buttonView = this._createButton( MenuBarMenuListItemButtonView );
 
 			buttonView.set( {
-				label: t( 'Show source' )
+				label: t( 'Show source' ),
+				role: 'menuitemcheckbox'
 			} );
 
 			return buttonView;
@@ -392,12 +400,13 @@ export default class SourceEditing extends Plugin {
 		}
 	}
 
-	private _createButton<T extends typeof ButtonView | typeof MenuBarMenuListItemButtonView>( ButtonClass: T ): InstanceType<T> {
+	private _createButton<T extends typeof ButtonView>( ButtonClass: T ): InstanceType<T> {
 		const editor = this.editor;
 		const buttonView = new ButtonClass( editor.locale ) as InstanceType<T>;
 
 		buttonView.set( {
-			withText: true
+			withText: true,
+			isToggleable: true
 		} );
 
 		buttonView.bind( 'isOn' ).to( this, 'isSourceEditingMode' );

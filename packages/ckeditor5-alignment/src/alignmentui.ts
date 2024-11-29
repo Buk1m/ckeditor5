@@ -72,6 +72,13 @@ export default class AlignmentUI extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
+	public static override get isOfficialPlugin(): true {
+		return true;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public init(): void {
 		const editor = this.editor;
 		const options = normalizeAlignmentOptions( editor.config.get( 'alignment.options' )! );
@@ -219,16 +226,12 @@ export default class AlignmentUI extends Plugin {
 				const listItemView = new MenuBarMenuListItemView( locale, menuView );
 				const buttonView = new MenuBarMenuListItemButtonView( locale );
 
-				buttonView.extendTemplate( {
-					attributes: {
-						'aria-checked': buttonView.bindTemplate.to( 'isOn' )
-					}
-				} );
-
 				buttonView.delegate( 'execute' ).to( menuView );
 				buttonView.set( {
 					label: this.localizedOptionTitles[ option.name ],
-					icon: iconsMap.get( option.name )
+					icon: iconsMap.get( option.name ),
+					role: 'menuitemcheckbox',
+					isToggleable: true
 				} );
 
 				buttonView.on( 'execute', () => {

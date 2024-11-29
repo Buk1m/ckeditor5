@@ -39,21 +39,20 @@ describe( 'Underline', () => {
 		return editor.destroy();
 	} );
 
+	it( 'should have `isOfficialPlugin` static flag set to `true`', () => {
+		expect( UnderlineUI.isOfficialPlugin ).to.be.true;
+	} );
+
+	it( 'should have `isPremiumPlugin` static flag set to `false`', () => {
+		expect( UnderlineUI.isPremiumPlugin ).to.be.false;
+	} );
+
 	describe( 'toolbar button', () => {
 		beforeEach( () => {
 			underlineView = editor.ui.componentFactory.create( 'underline' );
 		} );
 
 		testButton();
-
-		it( 'should bind `isOn` to underline command', () => {
-			const command = editor.commands.get( 'underline' );
-
-			expect( underlineView.isOn ).to.be.false;
-
-			command.value = true;
-			expect( underlineView.isOn ).to.be.true;
-		} );
 	} );
 
 	describe( 'menu bar button', () => {
@@ -109,6 +108,18 @@ describe( 'Underline', () => {
 
 			expect( wasHandled ).to.be.true;
 			expect( spy.calledOnce ).to.be.true;
+		} );
+
+		it( 'should bind `isOn` to `command`.`value`', () => {
+			const command = editor.commands.get( 'underline' );
+
+			command.value = true;
+
+			expect( underlineView.isOn ).to.be.true;
+
+			command.value = false;
+
+			expect( underlineView.isOn ).to.be.false;
 		} );
 	}
 } );

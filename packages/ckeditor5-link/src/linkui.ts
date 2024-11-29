@@ -30,7 +30,12 @@ import LinkFormView, { type LinkFormValidatorCallback } from './ui/linkformview.
 import LinkActionsView from './ui/linkactionsview.js';
 import type LinkCommand from './linkcommand.js';
 import type UnlinkCommand from './unlinkcommand.js';
-import { addLinkProtocolIfApplicable, isLinkElement, LINK_KEYSTROKE } from './utils.js';
+import {
+	addLinkProtocolIfApplicable,
+	isLinkElement,
+	createBookmarkCallbacks,
+	LINK_KEYSTROKE
+} from './utils.js';
 
 import linkIcon from '../theme/icons/link.svg';
 
@@ -75,6 +80,13 @@ export default class LinkUI extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
+	public static override get isOfficialPlugin(): true {
+		return true;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public init(): void {
 		const editor = this.editor;
 		const t = this.editor.t;
@@ -98,9 +110,19 @@ export default class LinkUI extends Plugin {
 		// Renders a fake visual selection marker on a collapsed selection.
 		editor.conversion.for( 'editingDowncast' ).markerToElement( {
 			model: VISUAL_SELECTION_MARKER_NAME,
-			view: {
-				name: 'span',
-				classes: [ 'ck-fake-link-selection', 'ck-fake-link-selection_collapsed' ]
+			view: ( data, { writer } ) => {
+				if ( !data.markerRange.isCollapsed ) {
+					return null;
+				}
+
+				const markerElement = writer.createUIElement( 'span' );
+
+				writer.addClass(
+					[ 'ck-fake-link-selection', 'ck-fake-link-selection_collapsed' ],
+					markerElement
+				);
+
+				return markerElement;
 			}
 		} );
 
@@ -154,7 +176,11 @@ export default class LinkUI extends Plugin {
 	 */
 	private _createActionsView(): LinkActionsView {
 		const editor = this.editor;
-		const actionsView = new LinkActionsView( editor.locale, editor.config.get( 'link' ) );
+		const actionsView = new LinkActionsView(
+			editor.locale,
+			editor.config.get( 'link' ),
+			createBookmarkCallbacks( editor )
+		);
 		const linkCommand: LinkCommand = editor.commands.get( 'link' )!;
 		const unlinkCommand: UnlinkCommand = editor.commands.get( 'unlink' )!;
 
@@ -241,30 +267,32 @@ export default class LinkUI extends Plugin {
 	 */
 	private _createToolbarLinkButton(): void {
 		const editor = this.editor;
-		const linkCommand: LinkCommand = editor.commands.get( 'link' )!;
 
 		editor.ui.componentFactory.add( 'link', () => {
 			const button = this._createButton( ButtonView );
 
 			button.set( {
-				tooltip: true,
-				isToggleable: true
+				tooltip: true
 			} );
-
-			button.bind( 'isOn' ).to( linkCommand, 'value', value => !!value );
 
 			return button;
 		} );
 
 		editor.ui.componentFactory.add( 'menuBar:link', () => {
-			return this._createButton( MenuBarMenuListItemButtonView );
+			const button = this._createButton( MenuBarMenuListItemButtonView );
+
+			button.set( {
+				role: 'menuitemcheckbox'
+			} );
+
+			return button;
 		} );
 	}
 
 	/**
 	 * Creates a button for link command to use either in toolbar or in menu bar.
 	 */
-	private _createButton<T extends typeof ButtonView | typeof MenuBarMenuListItemButtonView>( ButtonClass: T ): InstanceType<T> {
+	private _createButton<T extends typeof ButtonView>( ButtonClass: T ): InstanceType<T> {
 		const editor = this.editor;
 		const locale = editor.locale;
 		const command = editor.commands.get( 'link' )!;
@@ -274,10 +302,12 @@ export default class LinkUI extends Plugin {
 		view.set( {
 			label: t( 'Link' ),
 			icon: linkIcon,
-			keystroke: LINK_KEYSTROKE
+			keystroke: LINK_KEYSTROKE,
+			isToggleable: true
 		} );
 
 		view.bind( 'isEnabled' ).to( command, 'isEnabled' );
+		view.bind( 'isOn' ).to( command, 'value', value => !!value );
 
 		// Show the panel on button click.
 		this.listenTo( view, 'execute', () => this._showUI( true ) );

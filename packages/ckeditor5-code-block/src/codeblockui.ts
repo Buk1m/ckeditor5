@@ -44,6 +44,13 @@ export default class CodeBlockUI extends Plugin {
 	/**
 	 * @inheritDoc
 	 */
+	public static override get isOfficialPlugin(): true {
+		return true;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public init(): void {
 		const editor = this.editor;
 		const t = editor.t;
@@ -98,6 +105,7 @@ export default class CodeBlockUI extends Plugin {
 			const menuView = new MenuBarMenuView( locale );
 
 			menuView.buttonView.set( {
+				role: 'menuitem',
 				label: t( 'Code block' ),
 				icon: icons.codeBlock
 			} );
@@ -115,7 +123,11 @@ export default class CodeBlockUI extends Plugin {
 				const buttonView = new MenuBarMenuListItemButtonView( locale );
 
 				buttonView.bind( ...Object.keys( definition.model ) as Array<keyof MenuBarMenuListItemButtonView> ).to( definition.model );
-				buttonView.bind( 'ariaChecked' ).to( buttonView, 'isOn' );
+				buttonView.set( {
+					isToggleable: true,
+					role: 'menuitemcheckbox'
+				} );
+
 				buttonView.delegate( 'execute' ).to( menuView );
 
 				buttonView.on( 'execute', () => {

@@ -29,6 +29,14 @@ describe( 'FindAndReplaceUI', () => {
 		expect( FindAndReplaceUI.pluginName ).to.equal( 'FindAndReplaceUI' );
 	} );
 
+	it( 'should have `isOfficialPlugin` static flag set to `true`', () => {
+		expect( FindAndReplaceUI.isOfficialPlugin ).to.be.true;
+	} );
+
+	it( 'should have `isPremiumPlugin` static flag set to `false`', () => {
+		expect( FindAndReplaceUI.isPremiumPlugin ).to.be.false;
+	} );
+
 	describe( 'init()', () => {
 		describe( 'with the default UI type config (dialog)', () => {
 			let toolbarButtonView, menuBarButtonView, dialogPlugin, dialogView;
@@ -122,6 +130,10 @@ describe( 'FindAndReplaceUI', () => {
 					} );
 
 					testButton();
+
+					it( 'should have proper role set', () => {
+						expect( button.role ).to.be.equal( 'menuitemcheckbox' );
+					} );
 				} );
 
 				function testButton() {
@@ -137,6 +149,16 @@ describe( 'FindAndReplaceUI', () => {
 							button.fire( 'execute' );
 
 							sinon.assert.callOrder( disableCssTransitionsSpy, selectSpy, enableCssTransitionsSpy );
+						} );
+
+						it( 'should be bound to dialog id', () => {
+							dialogPlugin.id = 'findAndReplace';
+
+							expect( button.isOn ).to.be.true;
+
+							dialogPlugin.id = null;
+
+							expect( button.isOn ).to.be.false;
 						} );
 
 						it( 'the form should be reset', () => {

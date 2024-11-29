@@ -37,21 +37,20 @@ describe( 'CodeUI', () => {
 		return editor.destroy();
 	} );
 
+	it( 'should have `isOfficialPlugin` static flag set to `true`', () => {
+		expect( CodeUI.isOfficialPlugin ).to.be.true;
+	} );
+
+	it( 'should have `isPremiumPlugin` static flag set to `false`', () => {
+		expect( CodeUI.isPremiumPlugin ).to.be.false;
+	} );
+
 	describe( 'toolbar button', () => {
 		beforeEach( () => {
 			codeView = editor.ui.componentFactory.create( 'code' );
 		} );
 
 		testButton();
-
-		it( 'should bind `isOn` to code command', () => {
-			const command = editor.commands.get( 'code' );
-
-			expect( codeView.isOn ).to.be.false;
-
-			command.value = true;
-			expect( codeView.isOn ).to.be.true;
-		} );
 	} );
 
 	describe( 'menu bar button', () => {
@@ -60,6 +59,20 @@ describe( 'CodeUI', () => {
 		} );
 
 		testButton();
+
+		it( 'should create button with `menuitemcheckbox` role', () => {
+			expect( codeView.role ).to.equal( 'menuitemcheckbox' );
+		} );
+
+		it( 'should bind `isOn` to `aria-checked` attribute', () => {
+			codeView.render();
+
+			codeView.isOn = true;
+			expect( codeView.element.getAttribute( 'aria-checked' ) ).to.be.equal( 'true' );
+
+			codeView.isOn = false;
+			expect( codeView.element.getAttribute( 'aria-checked' ) ).to.be.equal( 'false' );
+		} );
 	} );
 
 	function testButton() {
@@ -86,6 +99,18 @@ describe( 'CodeUI', () => {
 
 			command.isEnabled = false;
 			expect( codeView.isEnabled ).to.be.false;
+		} );
+
+		it( 'should bind `isOn` to `command`.`value`', () => {
+			const command = editor.commands.get( 'code' );
+
+			command.value = true;
+
+			expect( codeView.isOn ).to.be.true;
+
+			command.value = false;
+
+			expect( codeView.isOn ).to.be.false;
 		} );
 	}
 } );

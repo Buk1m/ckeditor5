@@ -65,6 +65,14 @@ describe( 'HeadingUI', () => {
 		return editor.destroy();
 	} );
 
+	it( 'should have `isOfficialPlugin` static flag set to `true`', () => {
+		expect( HeadingUI.isOfficialPlugin ).to.be.true;
+	} );
+
+	it( 'should have `isPremiumPlugin` static flag set to `false`', () => {
+		expect( HeadingUI.isPremiumPlugin ).to.be.false;
+	} );
+
 	describe( 'init()', () => {
 		describe( 'toolbar dropdown', () => {
 			let dropdown;
@@ -405,25 +413,25 @@ describe( 'HeadingUI', () => {
 				] );
 			} );
 
-			it( 'should bind #ariaChecked to #isOn', () => {
+			it( 'should bind `aria-checked` element attribute to #isOn', () => {
 				command.value = 'heading2';
 				paragraphCommand.value = false;
 
-				expect( dumpItems( 'ariaChecked' ) ).to.have.deep.ordered.members( [
-					[ 'Paragraph', false ],
-					[ 'Heading 1', false ],
-					[ 'Heading 2', true ],
-					[ 'Heading 3', false ]
+				expect( dumpItems( item => item.element.getAttribute( 'aria-checked' ) ) ).to.have.deep.ordered.members( [
+					[ 'Paragraph', 'false' ],
+					[ 'Heading 1', 'false' ],
+					[ 'Heading 2', 'true' ],
+					[ 'Heading 3', 'false' ]
 				] );
 
 				command.value = false;
 				paragraphCommand.value = true;
 
-				expect( dumpItems( 'ariaChecked' ) ).to.have.deep.ordered.members( [
-					[ 'Paragraph', true ],
-					[ 'Heading 1', false ],
-					[ 'Heading 2', false ],
-					[ 'Heading 3', false ]
+				expect( dumpItems( item => item.element.getAttribute( 'aria-checked' ) ) ).to.have.deep.ordered.members( [
+					[ 'Paragraph', 'true' ],
+					[ 'Heading 1', 'false' ],
+					[ 'Heading 2', 'false' ],
+					[ 'Heading 3', 'false' ]
 				] );
 			} );
 
