@@ -769,8 +769,10 @@ export default class Mapper extends /* #__PURE__ */ EmitterMixin() {
  * * it is optimized for initial downcast process (long insertions), which is crucial for editor init and data save,
  * * it does not save all possible positions for memory considerations, although it is a possible improvement, which may have increase
  *   performance, as well as simplify some parts of the `MapperCache` logic.
+ *
+ * @internal
  */
-class MapperCache extends /* #__PURE__ */ EmitterMixin() {
+export class MapperCache extends /* #__PURE__ */ EmitterMixin() {
 	/**
 	 * For every view element or document fragment tracked by `MapperCache`, it holds currently cached data, or more precisely,
 	 * model offset to view position mappings. See also {@link ~MappingCache MappingCache} and {@link ~CacheItem CacheItem}.
