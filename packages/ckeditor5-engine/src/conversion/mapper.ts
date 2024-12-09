@@ -490,7 +490,7 @@ export default class Mapper extends /* #__PURE__ */ EmitterMixin() {
 	 *
 	 * @param viewPosition Position for which a mapped ancestor should be found.
 	 */
-	public findMappedViewAncestor( viewPosition: ViewPosition ): ViewElement | ViewDocumentFragment {
+	public findMappedViewAncestor( viewPosition: ViewPosition ): ViewElement {
 		let parent: any = viewPosition.parent;
 
 		while ( !this._viewToModelMapping.has( parent ) ) {
