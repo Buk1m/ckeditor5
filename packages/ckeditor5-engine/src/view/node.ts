@@ -261,11 +261,7 @@ export default abstract class Node extends /* #__PURE__ */ EmitterMixin( TypeChe
 	 * @fires change
 	 */
 	public _fireChange( type: ChangeType, node: Node, data?: { index: number } ): void {
-		if ( type == 'children' ) {
-			this.fire( 'change:children', node, data! );
-		} else {
-			this.fire( `change:${ type }`, node );
-		}
+		this.fire( `change:${ type }`, node, data );
 
 		if ( this.parent ) {
 			this.parent._fireChange( type, node, data );
