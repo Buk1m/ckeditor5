@@ -83,7 +83,7 @@ export function enablePlaceholder( { view, element, text, isDirectHost = true, k
 			text,
 			isDirectHost,
 			keepOnFocus,
-			hostElement: isDirectHost ? element : null
+			hostElement: isDirectHost ? element : getChildPlaceholderHostSubstitute( element )
 		};
 
 		// Store information about the element placeholder under its document.
@@ -230,30 +230,10 @@ function updateDocumentPlaceholders(
 	placeholders: Iterable<[ Element, PlaceholderConfig ]>,
 	writer: DowncastWriter
 ): boolean {
-	const processedHostElements: Array<Element> = [];
 	let wasViewModified = false;
 
 	for ( const [ element, config ] of placeholders ) {
-		if ( config.isDirectHost ) {
-			processedHostElements.push( element );
-		} else {
-			const hostElement = getChildPlaceholderHostSubstitute( element );
-
-			// When not a direct host, it could happen that there is no child element capable of displaying a placeholder.
-			if ( !hostElement ) {
-				continue;
-			}
-
-			// Don't override placeholder if the host element already has some direct placeholder.
-			if ( processedHostElements.includes( hostElement ) ) {
-				continue;
-			}
-
-			// Update the host element (used for setting and removing the placeholder).
-			config.hostElement = hostElement;
-		}
-
-		if ( updatePlaceholder( writer, element, config ) ) {
+		if ( config.hostElement && updatePlaceholder( writer, element, config ) ) {
 			wasViewModified = true;
 		}
 	}
