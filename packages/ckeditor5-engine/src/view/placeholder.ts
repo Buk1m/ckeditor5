@@ -233,6 +233,10 @@ function updateDocumentPlaceholders(
 	let wasViewModified = false;
 
 	for ( const [ element, config ] of placeholders ) {
+		if ( !config.isDirectHost && !config.hostElement ) {
+			config.hostElement = getChildPlaceholderHostSubstitute( element );
+		}
+
 		if ( config.hostElement && updatePlaceholder( writer, element, config ) ) {
 			wasViewModified = true;
 		}
