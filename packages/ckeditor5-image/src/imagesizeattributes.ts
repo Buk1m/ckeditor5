@@ -168,6 +168,7 @@ export default class ImageSizeAttributes extends Plugin {
 
 				if ( width && height ) {
 					viewWriter.setStyle( 'aspect-ratio', `${ width }/${ height }`, img );
+					viewWriter.setAttribute( 'loading', 'lazy', img );
 				}
 			} );
 		}

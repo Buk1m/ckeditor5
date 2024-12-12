@@ -21,19 +21,19 @@ const initialData =
 				<div class="columns" style="gap:10px">
 					<div class="column" style="border: 1px solid orange">
 						<figure class="image">
-							<img src="/ckeditor5/tests/manual/sample.jpg"/>
+							<img src="/ckeditor5/tests/manual/sample.jpg" width="826" height="388"/>
 							<figcaption><abbr title="HyperText Markup Language">HTML</abbr></figcaption>
 						</figure>
 					</div>
 					<div class="column" style="border: 1px dotted blue">
 						<figure class="image">
-							<img src="/ckeditor5/tests/manual/sample.jpg"/>
+							<img src="/ckeditor5/tests/manual/sample.jpg" width="826" height="388"/>
 							<figcaption><abbr title="Cascading Style Sheets">CSS</abbr></figcaption>
 						</figure>
 					</div>
 					<div class="column" style="border: 1px dashed olive">
 						<figure class="image">
-							<img src="/ckeditor5/tests/manual/sample.jpg"/>
+							<img src="/ckeditor5/tests/manual/sample.jpg" width="826" height="388"/>
 							<figcaption><abbr title="JavaScript">JS</abbr></figcaption>
 						</figure>
 					</div>
