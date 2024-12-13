@@ -230,21 +230,41 @@ function updateDocumentPlaceholders(
 	placeholders: Iterable<[ Element, PlaceholderConfig ]>,
 	writer: DowncastWriter
 ): boolean {
+	const directHostElements: Array<Element> = [];
 	let wasViewModified = false;
 
+	// First set placeholders on the direct hosts.
 	for ( const [ element, config ] of placeholders ) {
-		if ( !config.isDirectHost ) {
-			const hostElement = getChildPlaceholderHostSubstitute( element );
+		if ( config.isDirectHost ) {
+			directHostElements.push( element );
 
-			// When not a direct host, it could happen that there is no child element
-			// capable of displaying a placeholder.
-			if ( !hostElement ) {
-				continue;
+			if ( updatePlaceholder( writer, element, config ) ) {
+				wasViewModified = true;
 			}
-
-			// Update the host element (used for setting and removing the placeholder).
-			config.hostElement = hostElement;
 		}
+	}
+
+	// Then set placeholders on the indirect hosts but only on those that does not already have an direct host placeholder.
+	for ( const [ element, config ] of placeholders ) {
+		if ( config.isDirectHost ) {
+			continue;
+		}
+
+		const hostElement = getChildPlaceholderHostSubstitute( element );
+
+		// When not a direct host, it could happen that there is no child element
+		// capable of displaying a placeholder.
+		if ( !hostElement ) {
+			continue;
+		}
+
+		// Don't override placeholder if the host element already has some direct placeholder.
+		if ( directHostElements.includes( hostElement ) ) {
+			continue;
+		}
+
+		// Update the host element (used for setting and removing the placeholder).
+		config.hostElement = hostElement;
 
 		if ( updatePlaceholder( writer, element, config ) ) {
 			wasViewModified = true;
