@@ -26,6 +26,7 @@ import {
 	type PositioningFunction
 } from '@ckeditor/ckeditor5-utils';
 
+import { isElement } from 'es-toolkit/compat';
 import '../../../theme/components/panel/balloonpanel.css';
 
 const toPx = /* #__PURE__ */ toUnit( 'px' );
@@ -1239,7 +1240,7 @@ export default class BalloonPanelView extends View {
  * e.g. when the passed object is a Rect instance or so.
  */
 function getDomElement( object: any ): HTMLElement | null {
-	if ( object instanceof HTMLElement ) {
+	if ( isElement( object ) ) {
 		return object;
 	}
 

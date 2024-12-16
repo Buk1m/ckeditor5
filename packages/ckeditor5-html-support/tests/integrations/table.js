@@ -17,7 +17,7 @@ import GeneralHtmlSupport from '../../src/generalhtmlsupport.js';
 import { getModelDataWithAttributes } from '../_utils/utils.js';
 import TableElementSupport from '../../src/integrations/table.js';
 
-import { range } from 'es-toolkit';
+import { range } from 'es-toolkit/compat';
 
 /* global document */
 

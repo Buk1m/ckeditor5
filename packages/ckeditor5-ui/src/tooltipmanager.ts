@@ -22,7 +22,7 @@ import {
 
 import type { Editor } from '@ckeditor/ckeditor5-core';
 
-import { debounce } from 'es-toolkit/compat';
+import { isElement, debounce, type DebouncedFunction } from 'es-toolkit/compat';
 
 import '../theme/components/tooltip/tooltip.css';
 
@@ -122,12 +122,12 @@ export default class TooltipManager extends /* #__PURE__ */ DomEmitterMixin() {
 	 * A debounced version of {@link #_pinTooltip}. Tooltips show with a delay to avoid flashing and
 	 * to improve the UX.
 	 */
-	private _pinTooltipDebounced!: ReturnType<typeof debounce<( targetDomElement: HTMLElement, data: TooltipData ) => void>>;
+	private _pinTooltipDebounced!: DebouncedFunction<( targetDomElement: HTMLElement, data: TooltipData ) => void>;
 
 	/**
 	 * A debounced version of {@link #_unpinTooltip}. Tooltips hide with a delay to allow hovering of their titles.
 	 */
-	private _unpinTooltipDebounced!: ReturnType<typeof debounce<VoidFunction>>;
+	private _unpinTooltipDebounced!: DebouncedFunction<VoidFunction>;
 
 	private readonly _watchdogExcluded!: true;
 
@@ -318,7 +318,7 @@ export default class TooltipManager extends /* #__PURE__ */ DomEmitterMixin() {
 	private _onLeaveOrBlur( evt: EventInfo, { target, relatedTarget }: any ) {
 		if ( evt.name === 'mouseleave' ) {
 			// Don't act when the event does not concern a DOM element (e.g. a mouseleave out of an entire document),
-			if ( !( target instanceof HTMLElement ) ) {
+			if ( !isElement( target ) ) {
 				return;
 			}
 
@@ -484,7 +484,7 @@ export default class TooltipManager extends /* #__PURE__ */ DomEmitterMixin() {
 export type TooltipPosition = 's' | 'n' | 'e' | 'w' | 'sw' | 'se';
 
 function getDescendantWithTooltip( element: HTMLElement ) {
-	if ( !( element instanceof HTMLElement ) ) {
+	if ( !isElement( element ) ) {
 		return null;
 	}
 

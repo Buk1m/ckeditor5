@@ -26,6 +26,7 @@ import {
 import MultiRootEditorUI from './multirooteditorui.js';
 import MultiRootEditorUIView from './multirooteditoruiview.js';
 
+import { isElement as _isElement } from 'lodash-es';
 import {
 	type RootElement,
 	type ViewRootEditableElement,
@@ -935,7 +936,7 @@ function getInitialData( sourceElementOrData: HTMLElement | string ): string {
 }
 
 function isElement( value: any ): value is HTMLElement {
-	return value instanceof HTMLElement;
+	return _isElement( value );
 }
 
 /**

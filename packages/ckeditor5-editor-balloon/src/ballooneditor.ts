@@ -22,6 +22,8 @@ import { CKEditorError, getDataFromElement } from 'ckeditor5/src/utils.js';
 import BalloonEditorUI from './ballooneditorui.js';
 import BalloonEditorUIView from './ballooneditoruiview.js';
 
+import { isElement as _isElement } from 'es-toolkit/compat';
+
 /**
  * The balloon editor implementation (Medium-like editor).
  * It uses an inline editable and a toolbar based on the {@link module:ui/toolbar/balloon/balloontoolbar~BalloonToolbar}.
@@ -228,5 +230,5 @@ function getInitialData( sourceElementOrData: HTMLElement | string ): string {
 }
 
 function isElement( value: any ): value is Element {
-	return value instanceof HTMLElement;
+	return _isElement( value );
 }

@@ -5,7 +5,7 @@
 
 /* globals console, window, document */
 
-import { debounce } from 'es-toolkit';
+import { debounce } from 'es-toolkit/compat';
 
 if ( window.logNative === undefined ) {
 	window.logNative = true;

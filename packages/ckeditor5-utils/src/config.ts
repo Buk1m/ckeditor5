@@ -7,7 +7,7 @@
  * @module utils/config
  */
 
-import { isPlainObject, cloneDeepWith } from 'es-toolkit/compat';
+import { isPlainObject, isElement, cloneDeepWith } from 'es-toolkit/compat';
 
 /**
  * Handles a configuration dictionary.
@@ -281,7 +281,7 @@ function cloneConfig<T>( source: T ): T {
  * If it's a function it will leave reference to actuall function.
  */
 function leaveItemReferences( value: unknown ): unknown {
-	return value instanceof HTMLElement || typeof value === 'function' ? value : undefined;
+	return isElement( value ) || typeof value === 'function' ? value : undefined;
 }
 
 /**

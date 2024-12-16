@@ -3,7 +3,7 @@
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-licensing-options
  */
 
-/* globals window, document, Event, console, HTMLElement */
+/* globals window, document, Event, console */
 
 import View from '@ckeditor/ckeditor5-ui/src/view.js';
 
@@ -19,6 +19,7 @@ import { setData as setModelData } from '@ckeditor/ckeditor5-engine/src/dev-util
 import { keyCodes } from '@ckeditor/ckeditor5-utils/src/keyboard.js';
 import testUtils from '@ckeditor/ckeditor5-core/tests/_utils/utils.js';
 import { assertBinding } from '@ckeditor/ckeditor5-utils/tests/_utils/utils.js';
+import { isElement } from 'lodash-es';
 import { ContextualBalloon, Dialog, DialogViewPosition } from '@ckeditor/ckeditor5-ui';
 
 describe( 'ClassicEditorUI', () => {
@@ -1027,7 +1028,7 @@ class VirtualClassicTestEditor extends VirtualTestEditor {
 	constructor( sourceElementOrData, config ) {
 		super( config );
 
-		if ( sourceElementOrData instanceof HTMLElement ) {
+		if ( isElement( sourceElementOrData ) ) {
 			this.sourceElement = sourceElementOrData;
 		}
 
@@ -1053,7 +1054,7 @@ class VirtualClassicTestEditor extends VirtualTestEditor {
 					.then( () => {
 						editor.ui.init();
 
-						const initialData = sourceElementOrData instanceof HTMLElement ?
+						const initialData = isElement( sourceElementOrData ) ?
 							sourceElementOrData.innerHTML :
 							sourceElementOrData;
 

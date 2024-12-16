@@ -40,7 +40,7 @@ import {
 	type Schema
 } from '@ckeditor/ckeditor5-engine';
 
-import { debounce } from 'es-toolkit/compat';
+import { debounce, type DebouncedFunction } from 'es-toolkit/compat';
 
 const toPx = /* #__PURE__ */ toUnit( 'px' );
 
@@ -91,7 +91,7 @@ export default class BalloonToolbar extends Plugin {
 	 * This function is stored as a plugin property to make possible to cancel
 	 * trailing debounced invocation on destroy.
 	 */
-	private readonly _fireSelectionChangeDebounced: ReturnType<typeof debounce<() => unknown>>;
+	private readonly _fireSelectionChangeDebounced: DebouncedFunction<() => unknown>;
 
 	/**
 	 * @inheritDoc

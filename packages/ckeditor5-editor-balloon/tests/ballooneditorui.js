@@ -3,7 +3,7 @@
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-licensing-options
  */
 
-/* globals document, Event, HTMLElement */
+/* globals document, Event */
 
 import BalloonEditor from '../src/ballooneditor.js';
 import BalloonEditorUI from '../src/ballooneditorui.js';
@@ -15,6 +15,7 @@ import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
 import Heading from '@ckeditor/ckeditor5-heading/src/heading.js';
 
 import { keyCodes } from '@ckeditor/ckeditor5-utils/src/keyboard.js';
+import { isElement } from 'es-toolkit/compat';
 import VirtualTestEditor from '@ckeditor/ckeditor5-core/tests/_utils/virtualtesteditor.js';
 import { setData as setModelData } from '@ckeditor/ckeditor5-engine/src/dev-utils/model.js';
 import { assertBinding } from '@ckeditor/ckeditor5-utils/tests/_utils/utils.js';
@@ -353,7 +354,7 @@ class VirtualBalloonTestEditor extends VirtualTestEditor {
 	constructor( sourceElementOrData, config ) {
 		super( config );
 
-		if ( sourceElementOrData instanceof HTMLElement ) {
+		if ( isElement( sourceElementOrData ) ) {
 			this.sourceElement = sourceElementOrData;
 		}
 
@@ -376,7 +377,7 @@ class VirtualBalloonTestEditor extends VirtualTestEditor {
 					.then( () => {
 						editor.ui.init();
 
-						const initialData = sourceElementOrData instanceof HTMLElement ?
+						const initialData = isElement( sourceElementOrData ) ?
 							sourceElementOrData.innerHTML :
 							sourceElementOrData;
 

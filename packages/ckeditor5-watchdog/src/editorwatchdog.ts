@@ -21,7 +21,7 @@ import type { RootAttributes } from '@ckeditor/ckeditor5-editor-multi-root';
 import areConnectedThroughProperties from './utils/areconnectedthroughproperties.js';
 import Watchdog, { type WatchdogConfig } from './watchdog.js';
 
-import { throttle, cloneDeepWith } from 'es-toolkit/compat';
+import { throttle, cloneDeepWith, isElement, type DebouncedFunction } from 'es-toolkit/compat';
 
 // eslint-disable-next-line ckeditor5-rules/no-cross-package-imports
 import type { Node, Text, Element, Writer } from 'ckeditor5/src/engine.js';
@@ -50,7 +50,7 @@ export default class EditorWatchdog<TEditor extends Editor = Editor> extends Wat
 	 * Throttled save method. The `save()` method is called the specified `saveInterval` after `throttledSave()` is called,
 	 * unless a new action happens in the meantime.
 	 */
-	private _throttledSave: ReturnType<typeof throttle<() => void>>;
+	private _throttledSave: DebouncedFunction<() => void>;
 
 	/**
 	 * The latest saved editor data represented as a root name -> root data object.
@@ -233,7 +233,7 @@ export default class EditorWatchdog<TEditor extends Editor = Editor> extends Wat
 					//
 					// If one element was initially set in `elementOrData`, then use that original element to restart the editor.
 					// This is for compatibility purposes with single-root editor types.
-					if ( this._elementOrData instanceof HTMLElement ) {
+					if ( isElement( this._elementOrData ) ) {
 						return this.create( this._elementOrData, updatedConfig, updatedConfig.context );
 					} else {
 						return this.create( this._editables, updatedConfig, updatedConfig.context );
@@ -452,7 +452,7 @@ export default class EditorWatchdog<TEditor extends Editor = Editor> extends Wat
 	private _cloneEditorConfiguration( config: EditorConfig ): EditorConfig {
 		return cloneDeepWith( config, ( value, key ) => {
 			// Leave DOM references.
-			if ( value instanceof HTMLElement ) {
+			if ( isElement( value ) ) {
 				return value;
 			}
 
