@@ -83,7 +83,7 @@ export default class BalloonToolbar extends Plugin {
 	private readonly _balloon: ContextualBalloon;
 
 	/**
-	 * Fires `_selectionChangeDebounced` event using `lodash#debounce`.
+	 * Fires `_selectionChangeDebounced` event using `es-toolkit#debounce`.
 	 *
 	 * This event is an internal plugin event which is fired 200 ms after model selection last change.
 	 * This is to makes easy test debounced action without need to use `setTimeout`.

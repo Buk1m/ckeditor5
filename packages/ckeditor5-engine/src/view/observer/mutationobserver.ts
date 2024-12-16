@@ -258,7 +258,7 @@ export default class MutationObserver extends Observer {
 }
 
 function sameNodes( child1: ViewNode, child2: ViewNode ) {
-	// First level of comparison (array of children vs array of children) – use the Lodash's default behavior.
+	// First level of comparison (array of children vs array of children) – use the es-toolkit's default behavior.
 	if ( Array.isArray( child1 ) ) {
 		return;
 	}

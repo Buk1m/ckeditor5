@@ -67,7 +67,7 @@ export default class SelectionObserver extends Observer {
 	private readonly _documents: WeakSet<Document>;
 
 	/**
-	 * Fires debounced event `selectionChangeDone`. It uses `lodash#debounce` method to delay function call.
+	 * Fires debounced event `selectionChangeDone`. It uses `es-toolkit#debounce` method to delay function call.
 	 */
 	private readonly _fireSelectionChangeDoneDebounced: ReturnType<typeof debounce<( data: ViewDocumentSelectionEventData ) => void>>;
 

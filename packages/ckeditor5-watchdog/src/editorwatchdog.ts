@@ -21,8 +21,7 @@ import type { RootAttributes } from '@ckeditor/ckeditor5-editor-multi-root';
 import areConnectedThroughProperties from './utils/areconnectedthroughproperties.js';
 import Watchdog, { type WatchdogConfig } from './watchdog.js';
 
-import { throttle } from 'es-toolkit/compat';
-import { cloneDeepWith } from 'lodash-es';
+import { throttle, cloneDeepWith } from 'es-toolkit/compat';
 
 // eslint-disable-next-line ckeditor5-rules/no-cross-package-imports
 import type { Node, Text, Element, Writer } from 'ckeditor5/src/engine.js';

@@ -89,7 +89,7 @@ export default class MentionUI extends Plugin {
 	private _lastRequested?: string;
 
 	/**
-	 * Debounced feed requester. It uses `lodash#debounce` method to delay function call.
+	 * Debounced feed requester. It uses `es-toolkit#debounce` method to delay function call.
 	 */
 	private _requestFeedDebounced: ( marker: string, feedText: string ) => void;
 
