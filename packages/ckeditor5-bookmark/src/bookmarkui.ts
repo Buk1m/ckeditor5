@@ -134,8 +134,16 @@ export default class BookmarkUI extends Plugin {
 		widgetToolbarRepository.register( 'bookmark', {
 			ariaLabel: t( 'Bookmark toolbar' ),
 			items: editor.config.get( 'bookmark.toolbar' )!,
-
 			getRelatedElement: getSelectedBookmarkWidget,
+
+			// Delay the widget toolbar to avoid flickering when the expected selection
+			// is not the same as that one after enforcing browser to refresh DOM selection.
+			// It happens quite often when user clicks somewhere at the end of the paragraph *AND*
+			// the last child of the paragraph is the bookmark element with the caret inside.
+			// In such scenario, the browser will move the caret to the start of the paragraph
+			// most of the time, so we need to wait for the browser to finish its job and check
+			// if the selection is still the same.
+			debounced: true,
 
 			// Override positions to the same list as for balloon panel default
 			// so widget toolbar will try to use same position as form view.
