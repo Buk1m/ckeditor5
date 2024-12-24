@@ -140,9 +140,10 @@ export default class BookmarkUI extends Plugin {
 			// is not the same as that one after enforcing browser to refresh DOM selection.
 			// It happens quite often when user clicks somewhere at the end of the paragraph *AND*
 			// the last child of the paragraph is the bookmark element with the caret inside.
-			// In such scenario, the browser will move the caret to the start of the paragraph
-			// most of the time, so we need to wait for the browser to finish its job and check
-			// if the selection is still the same.
+			// In such scenario, the editor will focus bookmark element, and the `update` event
+			// will be sent but in meantime, the browser will refresh the selection in short time
+			// and the widget toolbar will be shown for the paragraph instead of the bookmark.
+			// See more: https://github.com/ckeditor/ckeditor5/pull/17690
 			debounced: true,
 
 			// Override positions to the same list as for balloon panel default
