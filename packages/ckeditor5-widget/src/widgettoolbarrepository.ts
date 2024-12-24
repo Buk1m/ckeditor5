@@ -98,7 +98,7 @@ export default class WidgetToolbarRepository extends Plugin {
 	constructor( editor: Editor ) {
 		super( editor );
 
-		this._debouncedUpdateToolbarVisibility = debounce( this._updateToolbarsVisibility.bind( this ), 50 );
+		this._debouncedUpdateToolbarVisibility = debounce( this._updateToolbarsVisibility.bind( this ), 15 );
 	}
 
 	/**
