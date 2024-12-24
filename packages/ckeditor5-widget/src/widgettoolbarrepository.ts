@@ -125,14 +125,17 @@ export default class WidgetToolbarRepository extends Plugin {
 		} );
 
 		this.listenTo<EditorUIUpdateEvent>( editor.ui, 'update', () => {
-			// When the user clicks on a widget (for example bookmark anchor), it focuses such widget and
-			// the `update` event is being fired. The problem is that sometimes, shortly after this `update` event
-			// the second one is being fired after changing selection. The problem is that from time to time it changes
-			// selection to different element (for example to the paragraph) and then the toolbar is being immediately
-			// hidden (causing flickering). It does not happen fo regular widgets (like images) but it looks like anchors
-			// with single SVG element inside are causing this issue. To prevent this flickering we need to debounce
-			// toolbar visibility update.
-			// See more: https://github.com/ckeditor/ckeditor5/pull/17690
+			// When a widget (e.g., a bookmark anchor) is clicked, two consecutive 'update' events may fire:
+			// 1. First when the widget gets focused
+			// 2. Second when the selection changes shortly after
+			//
+			// While the widget usually stays selected, sometimes the selection may move to a different element
+			// (e.g., to the start of the parent paragraph). This can cause the toolbar to flicker as it's
+			// quickly shown and hidden.
+			//
+			// This issue particularly affects widgets like anchors that contain a single SVG element.
+			// To prevent the flickering, we need to debounce the toolbar visibility updates.
+			// See: https://github.com/ckeditor/ckeditor5/pull/17690
 			if ( this._isSelectedDefinitionDebounced() ) {
 				this._debouncedUpdateToolbarVisibility();
 			} else {
